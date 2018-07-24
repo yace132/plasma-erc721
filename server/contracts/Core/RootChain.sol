@@ -595,10 +595,10 @@ contract RootChain is ERC721Receiver {
     function checkTxIncluded(uint64 slot, bytes32 txHash, uint256 blockNumber, bytes proof) private view {
         bytes32 root = childChain[blockNumber].root;
 
-        if (blockNumber % childBlockInterval != 0) {
+        if (blockNumber % childBlockInterval != 0) { // 存款交易
             // Check against block root for deposit block numbers
             require(txHash == root);
-        } else {
+        } else { // plasma鏈的交易
             // Check against merkle tree for all other block numbers
             require(
                 checkMembership(
