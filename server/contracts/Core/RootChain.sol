@@ -294,14 +294,14 @@ contract RootChain is ERC721Receiver {
         private
         view
     {
-        if (blocks[1] % childBlockInterval != 0) {
+        if (blocks[1] % childBlockInterval != 0) { //存款交易
             checkIncludedAndSigned(
                 exitingTxBytes,
                 exitingTxInclusionProof,
                 signature,
                 blocks[1]
             );
-        } else {
+        } else { //plasma交易
             checkBothIncludedAndSigned(
                 prevTxBytes, exitingTxBytes, prevTxInclusionProof,
                 exitingTxInclusionProof, signature,
