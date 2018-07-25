@@ -233,7 +233,7 @@ contract RootChain is ERC721Receiver {
         childChain[currentBlock] = ChildBlock({
             // save signed transaction hash as root
             // hash for deposit transactions is the hash of its slot
-            root: keccak256(abi.encodePacked(slot)),
+            root: keccak256(abi.encodePacked(slot)), // deposit block只存token編號，其他東西記錄在合約的coins中
             createdAt: block.timestamp
         });
 
@@ -311,6 +311,7 @@ contract RootChain is ERC721Receiver {
     }
 
     // Needed to bypass stack limit errors
+    // 付押金排隊
     function pushExit(
         uint64 slot,
         address prevOwner,
