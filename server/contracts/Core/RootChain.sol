@@ -221,14 +221,14 @@ contract RootChain is ERC721Receiver {
 
         // Update state. Leave `exit` empty
         Coin memory coin;
-        coin.uid = uid;
+        coin.uid = uid; // ERC 721的合約有自己訂的uid, 可能會重複 ? 
         coin.contractAddress = msg.sender;
         coin.denomination = denomination;
         coin.depositBlock = currentBlock;
         coin.owner = from;
         coin.state = State.DEPOSITED;
-        uint64 slot = uint64(bytes8(keccak256(abi.encodePacked(numCoins, msg.sender, from))));
-        coins[slot] = coin;
+        uint64 slot = uint64(bytes8(keccak256(abi.encodePacked(numCoins, msg.sender, from)))); // 用slot 取代uid，每個token都能獲得唯一的編號
+        coins[slot] = coin;// 儲存coin的資料
 
         childChain[currentBlock] = ChildBlock({
             // save signed transaction hash as root
