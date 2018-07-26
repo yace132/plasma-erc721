@@ -256,7 +256,7 @@ contract RootChain is ERC721Receiver {
         bytes prevTxBytes, bytes exitingTxBytes,
         bytes prevTxInclusionProof, bytes exitingTxInclusionProof,
         bytes signature,
-        uint256[2] blocks)
+        uint256[2] blocks) // blocks[0], blocks[1]分別代表2筆交易在第幾個block
         external
         payable isBonded
         isState(slot, State.DEPOSITED)
@@ -294,7 +294,7 @@ contract RootChain is ERC721Receiver {
         private
         view
     {
-        if (blocks[1] % childBlockInterval != 0) { //存款交易
+        if (blocks[1] % childBlockInterval != 0) { //存款交易不會有前一筆交易
             checkIncludedAndSigned(
                 exitingTxBytes,
                 exitingTxInclusionProof,
