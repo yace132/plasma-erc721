@@ -262,7 +262,7 @@ contract RootChain is ERC721Receiver {
         isState(slot, State.DEPOSITED)
     {
         require(msg.sender == exitingTxBytes.getOwner());
-        doInclusionChecks(
+        doInclusionChecks( // 最底下是呼叫 checkIncludedAndSigned()
             prevTxBytes, exitingTxBytes,
             prevTxInclusionProof, exitingTxInclusionProof,
             signature,
@@ -566,7 +566,8 @@ contract RootChain is ERC721Receiver {
         // Deposit transactions need to be signed by their owners
         // e.g. Alice signs a transaction to Alice
         require(txData.hash.ecverify(signature, txData.owner), "Invalid signature");
-        checkTxIncluded(txData.slot, txData.hash, blk, exitingTxInclusionProof);
+        checkTxIncluded(txData.slot, txData.hash, blk, exitingTxInclusionProof); 
+        // 最底下呼叫SparseMerkleTree.sol 的 checkMembership()
     }
 
     function checkBothIncludedAndSigned(
