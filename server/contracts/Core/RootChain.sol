@@ -566,6 +566,7 @@ contract RootChain is ERC721Receiver {
         // Deposit transactions need to be signed by their owners
         // e.g. Alice signs a transaction to Alice
         require(txData.hash.ecverify(signature, txData.owner), "Invalid signature");
+        //看client端加一些字，底下在Libraries/ECVerify.sol呼叫ecrecover()
         checkTxIncluded(txData.slot, txData.hash, blk, exitingTxInclusionProof); 
         // 最底下呼叫SparseMerkleTree.sol 的 checkMembership()
     }
